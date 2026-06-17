@@ -21,15 +21,16 @@ import java.util.List;
  */
 public class InscricaoDAO {
 
-    private static final String SQL_DTO
-            = "SELECT i.id, i.dataInscricao, i.estado, "
-            + "       t.nome AS nomeTurma, t.sala, t.anoAcademico, "
-            + "       c.nome AS nomeCurso, "
-            + "       pl.anoLetivo, pl.semestre "
-            + "FROM inscricao i "
-            + "JOIN turma        t  ON i.idTurma          = t.id "
-            + "JOIN curso        c  ON t.idCurso           = c.id "
-            + "JOIN periodoLetivo pl ON t.idPeriodoLetivo  = pl.id ";
+    private static final String SQL_DTO = """
+        SELECT i.id, i.dataInscricao, i.estado,
+            t.nome AS nomeTurma, t.sala, t.anoAcademico,
+            c.nome AS nomeCurso,
+            pl.anoLetivo, pl.semestre
+        FROM inscricao i
+        JOIN turma        t  ON i.idTurma          = t.id
+        JOIN curso        c  ON t.idCurso           = c.id
+        JOIN periodoLetivo pl ON t.idPeriodoLetivo  = pl.id
+    """;
 
     public boolean inserir(Inscricao i) {
         String sql = "INSERT INTO inscricao (idEstudante, idTurma, dataInscricao, estado) "

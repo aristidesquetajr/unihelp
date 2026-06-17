@@ -703,6 +703,22 @@ a{
     color:#9a5b0d;
     background:rgba(192,86,33,.1)
 }
+.badge-primary{
+    color:var(--primary);
+    background:rgba(30,58,95,.1)
+}
+.badge-info{
+    color:var(--info);
+    background:rgba(43,108,176,.1)
+}
+.badge-accent{
+    color:var(--accent-dark);
+    background:rgba(201,162,39,.14)
+}
+.badge-neutral{
+    color:#475467;
+    background:#f2f4f7
+}
 .badge-success{
     color:var(--success);
     background:rgba(39,103,73,.1)
@@ -721,6 +737,108 @@ a{
     color:#667085;
     font-size:.78rem;
     font-weight:800
+}
+.filter-form{
+    display:grid;
+    grid-template-columns:minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
+    gap:1rem;
+    align-items:end
+}
+.filter-form-compact{
+    grid-template-columns:minmax(180px, 260px) auto;
+    justify-content:start
+}
+.filter-actions{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    flex-wrap:nowrap;
+    min-height:42px;
+    padding-bottom:.75rem
+}
+.filter-actions .btn{
+    min-height:40px;
+    white-space:nowrap
+}
+.period-summary-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:1rem
+}
+.period-summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:.85rem 1rem;
+    border:1px solid #e6eef6;
+    border-radius:8px;
+    background:var(--white);
+    box-shadow:0 6px 18px rgba(16,24,40,.04)
+}
+.period-summary span{
+    color:#344054;
+    font-weight:800
+}
+.period-summary strong{
+    color:var(--muted);
+    font-size:.84rem
+}
+.boletim-period-card{
+    margin-top:1rem
+}
+.boletim-table caption{
+    caption-side:top;
+    padding:.2rem 0 .9rem;
+    color:#344054;
+    font-size:.92rem;
+    font-weight:900;
+    text-align:left
+}
+.grade-val{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:48px;
+    padding:.3rem .45rem;
+    border-radius:6px;
+    font-weight:900
+}
+.grade-pass{
+    color:var(--success);
+    background:rgba(39,103,73,.1)
+}
+.grade-fail{
+    color:var(--danger);
+    background:rgba(197,48,48,.08)
+}
+.row-risk{
+    background:rgba(197,48,48,.025)
+}
+.row-active{
+    background:rgba(39,103,73,.035)
+}
+.current-enrollment{
+    border-color:rgba(39,103,73,.22);
+    margin-bottom:1rem
+}
+.enrollment-overview{
+    display:grid;
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+    gap:1rem
+}
+.enrollment-overview > div{
+    min-width:0;
+    padding:.75rem;
+    border:1px solid #eef2f7;
+    border-radius:8px;
+    background:#fbfdff
+}
+.enrollment-overview strong{
+    display:block;
+    margin-top:.25rem;
+    color:#111827;
+    overflow-wrap:anywhere
 }
 .empty-state{
     padding:2rem 1rem;
@@ -804,6 +922,16 @@ a{
     .stats-grid{
         grid-template-columns:repeat(2, minmax(0, 1fr))
     }
+    .filter-form,
+    .period-summary-grid{
+        grid-template-columns:1fr
+    }
+    .enrollment-overview{
+        grid-template-columns:repeat(2, minmax(0, 1fr))
+    }
+    .filter-actions{
+        padding-bottom:0
+    }
     .topnav-inner{
         align-items:flex-start;
         flex-direction:column;
@@ -822,6 +950,9 @@ a{
         grid-template-columns:1fr !important
     }
     .form-row{
+        grid-template-columns:1fr
+    }
+    .enrollment-overview{
         grid-template-columns:1fr
     }
     .section-header{

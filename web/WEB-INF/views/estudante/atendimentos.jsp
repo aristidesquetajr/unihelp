@@ -76,18 +76,23 @@
                 <div class="card-body" style="padding:.9rem 1.25rem">
                     <form action="${pageContext.request.contextPath}/estudante/atendimentos"
                           method="get"
-                          style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
-                        <select name="estado" class="form-control" style="max-width:220px">
-                            <option value="">Todos os estados</option>
-                            <option value="PENDENTE"   ${param.estado == 'PENDENTE'   ? 'selected' : ''}>Pendentes</option>
-                            <option value="CONFIRMADO" ${param.estado == 'CONFIRMADO' ? 'selected' : ''}>Confirmados</option>
-                            <option value="REJEITADO"  ${param.estado == 'REJEITADO'  ? 'selected' : ''}>Rejeitados</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            <i class="bi bi-search"></i> Filtrar
-                        </button>
-                        <a href="${pageContext.request.contextPath}/estudante/atendimentos"
-                           class="btn btn-outline btn-sm">Limpar</a>
+                          class="filter-form filter-form-compact">
+                        <div class="form-group">
+                            <label class="form-label" for="estado">Estado</label>
+                            <select id="estado" name="estado" class="form-control">
+                                <option value="">Todos os estados</option>
+                                <option value="PENDENTE"   ${param.estado == 'PENDENTE'   ? 'selected' : ''}>Pendentes</option>
+                                <option value="CONFIRMADO" ${param.estado == 'CONFIRMADO' ? 'selected' : ''}>Confirmados</option>
+                                <option value="REJEITADO"  ${param.estado == 'REJEITADO'  ? 'selected' : ''}>Rejeitados</option>
+                            </select>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Filtrar
+                            </button>
+                            <a href="${pageContext.request.contextPath}/estudante/atendimentos"
+                               class="btn btn-outline">Limpar</a>
+                        </div>
                     </form>
                 </div>
             </div>

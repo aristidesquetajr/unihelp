@@ -21,13 +21,14 @@ import ao.unic.ojj.util.ConexaoBD;
  */
 public class NotaDAO {
 
-    private static final String SQL_DTO
-            = "SELECT n.id, n.valor, n.tipo, "
-            + "       d.nome AS nomeDisciplina, d.codigo AS codigoDisciplina, "
-            + "       pl.anoLetivo, pl.semestre "
-            + "FROM nota n "
-            + "JOIN disciplina   d  ON n.idDisciplina    = d.id "
-            + "JOIN periodoLetivo pl ON n.idPeriodoLetivo = pl.id ";
+    private static final String SQL_DTO = """
+        SELECT n.id, n.valor, n.tipo,
+            d.nome AS nomeDisciplina, d.codigo AS codigoDisciplina,
+            pl.anoLetivo, pl.semestre
+        FROM nota n
+        JOIN disciplina   d  ON n.idDisciplina    = d.id
+        JOIN periodoLetivo pl ON n.idPeriodoLetivo = pl.id
+    """;
 
     public boolean inserir(Nota n) {
         String sql = "INSERT INTO nota (idEstudante, idDisciplina, idPeriodoLetivo, valor, tipo) "

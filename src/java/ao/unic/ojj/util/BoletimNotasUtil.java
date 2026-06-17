@@ -40,6 +40,16 @@ public final class BoletimNotasUtil {
                 .orElse(0);
     }
 
+    public static long contarDisciplinas(List<BoletimPeriodo> periodos) {
+        return linhas(periodos).size();
+    }
+
+    public static long contarEmRisco(List<BoletimPeriodo> periodos) {
+        return linhas(periodos).stream()
+                .filter(linha -> !linha.isAprovado())
+                .count();
+    }
+
     public static List<String> listarDisciplinas(List<NotaDetalheDTO> notas) {
         return notas.stream()
                 .map(NotaDetalheDTO::getNomeDisciplina)

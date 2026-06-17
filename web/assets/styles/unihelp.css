@@ -818,6 +818,9 @@ a{
 .row-active{
     background:rgba(39,103,73,.035)
 }
+.text-danger{
+    color:var(--danger)
+}
 .current-enrollment{
     border-color:rgba(39,103,73,.22);
     margin-bottom:1rem
@@ -839,6 +842,78 @@ a{
     margin-top:.25rem;
     color:#111827;
     overflow-wrap:anywhere
+}
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 1.4fr) minmax(280px, .8fr);
+    gap:1rem;
+    margin-bottom:1rem
+}
+.next-appointment{
+    display:flex;
+    gap:1rem;
+    align-items:flex-start
+}
+.date-block{
+    width:72px;
+    min-width:72px;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid #e6eef6;
+    text-align:center;
+    background:#fbfdff
+}
+.date-block strong{
+    display:block;
+    padding:.65rem .25rem .2rem;
+    color:var(--primary);
+    font-size:1.65rem;
+    line-height:1
+}
+.date-block span{
+    display:block;
+    padding:.25rem;
+    background:var(--primary);
+    color:var(--white);
+    font-size:.75rem;
+    font-weight:800;
+    text-transform:uppercase
+}
+.next-appointment h4{
+    margin:0 0 .35rem;
+    color:#111827
+}
+.next-appointment p{
+    margin:0 0 .75rem;
+    color:var(--muted);
+    font-size:.9rem
+}
+.quick-actions{
+    display:grid;
+    gap:.65rem
+}
+.performance-card{
+    margin-bottom:1rem
+}
+.performance-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:1rem
+}
+.performance-grid > div{
+    padding:.85rem 1rem;
+    border:1px solid #eef2f7;
+    border-radius:8px;
+    background:#fbfdff
+}
+.performance-grid strong{
+    display:block;
+    margin-top:.25rem;
+    color:#111827;
+    font-size:1.25rem
+}
+.empty-state.compact{
+    padding:1rem
 }
 .empty-state{
     padding:2rem 1rem;
@@ -932,6 +1007,9 @@ a{
     .filter-actions{
         padding-bottom:0
     }
+    .dashboard-grid{
+        grid-template-columns:1fr
+    }
     .topnav-inner{
         align-items:flex-start;
         flex-direction:column;
@@ -953,6 +1031,9 @@ a{
         grid-template-columns:1fr
     }
     .enrollment-overview{
+        grid-template-columns:1fr
+    }
+    .performance-grid{
         grid-template-columns:1fr
     }
     .section-header{

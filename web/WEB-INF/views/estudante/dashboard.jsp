@@ -77,6 +77,45 @@
                 </div>
             </c:if>
 
+            <c:choose>
+                <c:when test="${not empty inscricaoActiva}">
+                    <div class="card current-enrollment">
+                        <div class="card-header">
+                            <h3><i class="bi bi-mortarboard" style="margin-right:.4rem"></i>Situação Académica</h3>
+                            <span class="badge badge-success"><i class="bi bi-circle-fill" style="font-size:.45rem"></i> Inscrição Activa</span>
+                        </div>
+                        <div class="enrollment-overview">
+                            <div>
+                                <span class="lbl">Curso actual</span>
+                                <strong>${not empty inscricaoActiva.nomeCurso ? inscricaoActiva.nomeCurso : '—'}</strong>
+                            </div>
+                            <div>
+                                <span class="lbl">Turma</span>
+                                <strong>${not empty inscricaoActiva.nomeTurma ? inscricaoActiva.nomeTurma : '—'}</strong>
+                            </div>
+                            <div>
+                                <span class="lbl">Ano académico</span>
+                                <strong>${inscricaoActiva.anoAcademico}</strong>
+                            </div>
+                            <div>
+                                <span class="lbl">Período letivo</span>
+                                <strong>${inscricaoActiva.anoLetivo} · ${inscricaoActiva.semestre}.º semestre</strong>
+                            </div>
+                            <div>
+                                <span class="lbl">Sala</span>
+                                <strong>${not empty inscricaoActiva.sala ? inscricaoActiva.sala : '—'}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <div>Não existe uma inscrição activa registada para este estudante.</div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
             <!-- Cartões de estatísticas -->
             <div class="stats-grid">
                 <div class="stat-card">
@@ -94,17 +133,125 @@
                     </div>
                 </div>
                 <div class="stat-card">
-
+                    <div class="stat-icon primary"><i class="bi bi-graph-up-arrow"></i></div>
+                    <div>
+                        <div class="stat-value"><fmt:formatNumber value="${mediaGeral}" minFractionDigits="1" maxFractionDigits="1"/></div>
+                        <div class="stat-label">Média Geral</div>
+                    </div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon danger"><i class="bi bi-exclamation-triangle"></i></div>
+                    <div>
+                        <div class="stat-value">${not empty disciplinasEmRisco ? disciplinasEmRisco : 0}</div>
+                        <div class="stat-label">Disciplinas em Risco</div>
+                    </div>
+                </div>
+            </div>
 
+            <c:if test="${contPendentes > 0}">
+                <div class="alert alert-warning">
+                    <i class="bi bi-hourglass-split"></i>
+                    <div>Tem ${contPendentes} atendimento(s) pendente(s) a aguardar confirmação.</div>
+                </div>
+            </c:if>
+            <c:if test="${disciplinasEmRisco > 0}">
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <div>Existem ${disciplinasEmRisco} disciplina(s) com média abaixo de 10.</div>
+                </div>
+            </c:if>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="bi bi-calendar-event" style="margin-right:.4rem"></i>Próximo Atendimento</h3>
+                        <a href="${pageContext.request.contextPath}/estudante/agendar" class="btn btn-outline btn-sm">
+                            Novo <i class="bi bi-plus-lg"></i>
+                        </a>
+                    </div>
+                    <c:choose>
+                        <c:when test="${not empty proximoAtendimento}">
+                            <div class="next-appointment">
+                                <div class="date-block">
+                                    <strong><fmt:formatDate value="${proximoAtendimento.dataAgendada}" pattern="dd"/></strong>
+                                    <span><fmt:formatDate value="${proximoAtendimento.dataAgendada}" pattern="MMM"/></span>
+                                </div>
+                                <div>
+                                    <h4>${proximoAtendimento.descricao}</h4>
+                                    <p>
+                                        <i class="bi bi-clock"></i>
+                                        <fmt:formatDate value="${proximoAtendimento.dataAgendada}" pattern="HH:mm"/>
+                                        · ${not empty proximoAtendimento.nomeFuncionario ? proximoAtendimento.nomeFuncionario : 'Funcionário por confirmar'}
+                                    </p>
+                                    <c:choose>
+                                        <c:when test="${proximoAtendimento.estado == 'PENDENTE'}">
+                                            <span class="badge badge-warning"><i class="bi bi-hourglass-split"></i> Pendente</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge badge-success"><i class="bi bi-check-lg"></i> Confirmado</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="empty-state compact">
+                                <i class="bi bi-calendar-x"></i>
+                                <h3>Sem atendimento futuro</h3>
+                                <p>Não existe atendimento pendente ou confirmado nos próximos dias.</p>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="bi bi-lightning" style="margin-right:.4rem"></i>Ações Rápidas</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="${pageContext.request.contextPath}/estudante/agendar" class="btn btn-primary btn-full">
+                            <i class="bi bi-calendar-plus"></i> Agendar Atendimento
+                        </a>
+                        <a href="${pageContext.request.contextPath}/estudante/boletim" class="btn btn-outline-primary btn-full">
+                            <i class="bi bi-journal-text"></i> Ver Boletim
+                        </a>
+                        <a href="${pageContext.request.contextPath}/estudante/inscricoes" class="btn btn-outline-primary btn-full">
+                            <i class="bi bi-book"></i> Ver Inscrições
+                        </a>
+                        <a href="${pageContext.request.contextPath}/estudante/atendimentos" class="btn btn-outline-primary btn-full">
+                            <i class="bi bi-calendar2-check"></i> Ver Atendimentos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card performance-card">
+                <div class="card-header">
+                    <h3><i class="bi bi-bar-chart" style="margin-right:.4rem"></i>Desempenho Académico</h3>
+                    <a href="${pageContext.request.contextPath}/estudante/boletim" class="btn btn-outline btn-sm">
+                        Ver boletim <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="performance-grid">
+                    <div>
+                        <span class="lbl">Média geral</span>
+                        <strong><fmt:formatNumber value="${mediaGeral}" minFractionDigits="1" maxFractionDigits="1"/></strong>
+                    </div>
+                    <div>
+                        <span class="lbl">Disciplinas avaliadas</span>
+                        <strong>${not empty totalDisciplinas ? totalDisciplinas : 0}</strong>
+                    </div>
+                    <div>
+                        <span class="lbl">Disciplinas em risco</span>
+                        <strong class="${disciplinasEmRisco > 0 ? 'text-danger' : ''}">${not empty disciplinasEmRisco ? disciplinasEmRisco : 0}</strong>
+                    </div>
                 </div>
             </div>
 
             <!-- Tabela de atendimentos recentes -->
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="bi bi-clock-history" style="margin-right:.4rem"></i>Últimos Atendimentos</h3>
+                    <h3><i class="bi bi-clock-history" style="margin-right:.4rem"></i>Últimos 5 Atendimentos</h3>
                     <a href="${pageContext.request.contextPath}/estudante/atendimentos" class="btn btn-outline btn-sm">
                         Ver todos <i class="bi bi-arrow-right"></i>
                     </a>

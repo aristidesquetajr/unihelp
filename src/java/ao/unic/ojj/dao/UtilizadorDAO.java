@@ -26,7 +26,7 @@ public class UtilizadorDAO {
     public int inserir(Utilizador u, Connection con) {
         String sql = """
                 INSERT INTO utilizador (nome, email, senha, perfil, status)
-                VALUES (?,?,?,?,?)
+                VALUES (?,?,md5(?),?,?)
             """;
 
         try {

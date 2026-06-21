@@ -16,6 +16,9 @@ public class RegistoEstudanteDTO {
     private String confirmarSenha;
     private String numeroEstudante;
     private String telefone;
+    private int idPeriodoLetivo;
+    private int idCurso;
+    private int idTurma;
 
     public RegistoEstudanteDTO() {
     }
@@ -68,11 +71,39 @@ public class RegistoEstudanteDTO {
         this.telefone = telefone;
     }
 
+    public int getIdPeriodoLetivo() {
+        return idPeriodoLetivo;
+    }
+
+    public void setIdPeriodoLetivo(int idPeriodoLetivo) {
+        this.idPeriodoLetivo = idPeriodoLetivo;
+    }
+
+    public int getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(int idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public int getIdTurma() {
+        return idTurma;
+    }
+
+    public void setIdTurma(int idTurma) {
+        this.idTurma = idTurma;
+    }
+
     public boolean isCamposValidos() {
         return nome != null && !nome.isBlank()
                 && email != null && !email.isBlank()
                 && senha != null && !senha.isBlank()
-                && numeroEstudante != null && !numeroEstudante.isBlank();
+                && confirmarSenha != null && !confirmarSenha.isBlank()
+                && numeroEstudante != null && !numeroEstudante.isBlank()
+                && idPeriodoLetivo > 0
+                && idCurso > 0
+                && idTurma > 0;
     }
 
     public boolean isSenhasIguais() {

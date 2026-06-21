@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ao.unic.ojj.dto.EstudanteDetalheDTO;
@@ -45,11 +47,17 @@ public class EstudanteDAO {
 
             String sql = "INSERT INTO estudante (idUtilizador, numeroEstudante) VALUES (?,?)";
 
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, idUtilizador);
             ps.setString(2, dto.getNumeroEstudante());
             ps.executeUpdate();
+
+            ResultSet rsEstudante = ps.getGeneratedKeys();
+            if (!rsEstudante.next()) {
+                throw new SQLException("Falha ao obter id do Estudante.");
+            }
+            int idEstudante = rsEstudante.getInt(1);
 
             if (dto.getTelefone() != null && !dto.getTelefone().isBlank()) {
                 String sqlTel = "INSERT INTO telefone (numero, idUtilizador) VALUES (?,?)";
@@ -59,6 +67,18 @@ public class EstudanteDAO {
                 psTel.setInt(2, idUtilizador);
                 psTel.executeUpdate();
             }
+
+            String sqlInscricao = """
+                INSERT INTO inscricao (idEstudante, idTurma, dataInscricao, estado)
+                VALUES (?,?,?,?)
+            """;
+
+            PreparedStatement psInscricao = con.prepareStatement(sqlInscricao);
+            psInscricao.setInt(1, idEstudante);
+            psInscricao.setInt(2, dto.getIdTurma());
+            psInscricao.setDate(3, new java.sql.Date(new Date().getTime()));
+            psInscricao.setString(4, "ACTIVO");
+            psInscricao.executeUpdate();
 
             con.commit();
             return true;
@@ -79,6 +99,23 @@ public class EstudanteDAO {
                 }
             } catch (SQLException e) {
             }
+            ConexaoBD.fechar(con);
+        }
+    }
+
+    public boolean existeNumeroEstudante(String numeroEstudante) {
+        String sql = "SELECT 1 FROM estudante WHERE numeroEstudante=? LIMIT 1";
+        Connection con = null;
+        try {
+            con = ConexaoBD.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, numeroEstudante);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.err.println("[EstudanteDAO] Erro ao verificar número de estudante: " + e.getMessage());
+            return false;
+        } finally {
             ConexaoBD.fechar(con);
         }
     }

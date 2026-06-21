@@ -9,6 +9,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Agenda do dia no UNIHELP. Consulte todos os atendimentos agendados, horários e detalhes dos estudantes.">
+        <meta name="keywords" content="agenda diária, atendimentos, horários, UNIHELP, funcionário">
+        <meta property="og:title" content="Agenda do Dia — UNIHELP">
+        <meta property="og:description" content="Agenda diária de atendimentos para o funcionário.">
+        <meta property="og:type" content="website">
         <title>Agenda do Dia — UNIHELP</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

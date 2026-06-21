@@ -9,6 +9,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Atendimentos pendentes de aprovação no UNIHELP. Revise e tome decisões sobre requisições de estudantes de forma centralizada.">
+        <meta name="keywords" content="atendimentos pendentes, aprovação, requisições, UNIHELP, gestão funcionário">
+        <meta property="og:title" content="Atendimentos Pendentes — UNIHELP">
+        <meta property="og:description" content="Lista de atendimentos aguardando aprovação por funcionário.">
+        <meta property="og:type" content="website">
         <title>Atendimentos Pendentes — UNIHELP</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

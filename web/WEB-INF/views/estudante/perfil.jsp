@@ -6,6 +6,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Seu perfil académico no UNIHELP. Consulte dados pessoais, académicos e histórico de inscrições numa plataforma segura de gestão escolar.">
+        <meta name="keywords" content="perfil estudante, dados académicos, histórico, UNIHELP, gestão escolar">
+        <meta property="og:title" content="Meu Perfil — UNIHELP">
+        <meta property="og:description" content="Perfil académico com dados pessoais e informações de inscrição.">
+        <meta property="og:type" content="website">
         <title>Meu Perfil — UNIHELP | OJJ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

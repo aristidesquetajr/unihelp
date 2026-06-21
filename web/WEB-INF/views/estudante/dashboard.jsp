@@ -9,6 +9,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Dashboard do estudante no UNIHELP. Consulte sua situação académica, atendimentos, notas e inscrições numa plataforma moderna de gestão escolar.">
+        <meta name="keywords" content="dashboard estudante, situação académica, notas, atendimentos, UNIHELP, gestão escolar">
+        <meta property="og:title" content="Dashboard Estudante — UNIHELP">
+        <meta property="og:description" content="Painel académico do estudante com acesso a notas, atendimentos e inscrições.">
+        <meta property="og:type" content="website">
         <title>Dashboard — UNIHELP | OJJ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

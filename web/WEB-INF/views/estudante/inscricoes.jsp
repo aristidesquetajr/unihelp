@@ -8,6 +8,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Consulte seu histórico de inscrições no UNIHELP. Veja todos os cursos e períodos académicos em que se inscreveu.">
+        <meta name="keywords" content="inscrições, histórico académico, cursos, UNIHELP, gestão escolar">
+        <meta property="og:title" content="Histórico de Inscrições — UNIHELP">
+        <meta property="og:description" content="Histórico completo de inscrições académicas e períodos letivos.">
+        <meta property="og:type" content="website">
         <title>Histórico de Inscrições — UNIHELP | OJJ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

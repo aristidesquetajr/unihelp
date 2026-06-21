@@ -7,6 +7,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Consulte seu boletim de notas no UNIHELP. Acompanhe seu desempenho académico em cada disciplina de forma detalhada.">
+        <meta name="keywords" content="boletim notas, desempenho académico, disciplinas, UNIHELP, gestão escolar">
+        <meta property="og:title" content="Boletim de Notas — UNIHELP">
+        <meta property="og:description" content="Boletim académico com notas em todas as disciplinas inscritas.">
+        <meta property="og:type" content="website">
         <title>Boletim de Notas — UNIHELP | OJJ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

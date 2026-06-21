@@ -7,6 +7,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Registar novo estudante no UNIHELP. Adicione informações académicas e pessoais de forma simples e segura.">
+        <meta name="keywords" content="registar estudante, novo estudante, inscrição, UNIHELP, funcionário">
+        <meta property="og:title" content="Registar Estudante — UNIHELP">
+        <meta property="og:description" content="Formulário para registar novo estudante no sistema académico.">
+        <meta property="og:type" content="website">
         <title>Registar Estudante | UNIHELP</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

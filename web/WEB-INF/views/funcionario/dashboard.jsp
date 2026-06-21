@@ -9,6 +9,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Dashboard do funcionário no UNIHELP. Gerencie atendimentos pendentes, consulte a agenda e aprove requisições de estudantes.">
+        <meta name="keywords" content="dashboard funcionário, atendimentos, agenda, gestão, UNIHELP, sistema académico">
+        <meta property="og:title" content="Dashboard Funcionário — UNIHELP">
+        <meta property="og:description" content="Painel de gestão para funcionários com controlo de atendimentos e aprovações.">
+        <meta property="og:type" content="website">
         <title>Dashboard — Funcionário | UNIHELP</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

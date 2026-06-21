@@ -9,6 +9,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Consulte seus atendimentos no UNIHELP. Veja histórico, estados e detalhes de todos os atendimentos agendados.">
+        <meta name="keywords" content="atendimentos, histórico, estado, UNIHELP, gestão académica">
+        <meta property="og:title" content="Meus Atendimentos — UNIHELP">
+        <meta property="og:description" content="Histórico de atendimentos agendados com funcionários.">
+        <meta property="og:type" content="website">
         <title>Meus Atendimentos — UNIHELP | OJJ</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">

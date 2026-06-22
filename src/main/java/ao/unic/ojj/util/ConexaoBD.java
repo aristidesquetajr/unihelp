@@ -22,9 +22,6 @@ public class ConexaoBD {
 
     private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
 
-    private static final String USUARIO = "root";
-    private static final String SENHA = "";
-
     private ConexaoBD() {
     }
 

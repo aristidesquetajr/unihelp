@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ]
+    }
+  },
+  "agent": {
+    "fix-design": {
+      "description": "Corrige erros de design nas JSPs do UNIHELP (sidebar admin/funcionario, topnav estudante). Gatilho: design, css, estilo, layout, sidebar, topnav, ui visual responsivo.",
+      "mode": "subagent"
+    }
+  }
+}

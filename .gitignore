@@ -34,3 +34,21 @@ desktop.ini
 # ── Legado Ant (já não necessários) ─────────────────────────
 build/
 dist/
+
+.classpath
+.project
+.settings/
+
+# ── VS Code ──────────────────────────────────────────────────
+.vscode/
+
+# ── Editor Temp Files (vim, emacs, nano) ────────────────────
+*~
+*.swp
+*.swo
+
+# ── Merge Conflict Backups ───────────────────────────────────
+*.orig
+
+# ── Eclipse Annotation Processor ─────────────────────────────
+.factorypath

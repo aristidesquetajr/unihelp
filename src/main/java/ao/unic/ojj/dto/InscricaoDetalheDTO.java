@@ -14,9 +14,11 @@ import ao.unic.ojj.model.Inscricao;
  */
 public class InscricaoDetalheDTO {
 
-    private int idInscricao;
+    private int id;
     private Date dataInscricao;
     private Inscricao.Estado estado;
+    private String nomeEstudante;
+    private String numeroEstudante;
     private String nomeTurma;
     private String sala;
     private int anoAcademico;
@@ -27,12 +29,12 @@ public class InscricaoDetalheDTO {
     public InscricaoDetalheDTO() {
     }
 
-    public int getIdInscricao() {
-        return idInscricao;
+    public int getId() {
+        return id;
     }
 
-    public void setIdInscricao(int idInscricao) {
-        this.idInscricao = idInscricao;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDataInscricao() {
@@ -49,6 +51,29 @@ public class InscricaoDetalheDTO {
 
     public void setEstado(Inscricao.Estado e) {
         this.estado = e;
+    }
+
+    public String getNomeEstudante() {
+        return nomeEstudante;
+    }
+
+    public void setNomeEstudante(String nomeEstudante) {
+        this.nomeEstudante = nomeEstudante;
+    }
+
+    public String getNumeroEstudante() {
+        return numeroEstudante;
+    }
+
+    public void setNumeroEstudante(String numeroEstudante) {
+        this.numeroEstudante = numeroEstudante;
+    }
+
+    public String getNomePeriodo() {
+        if (anoLetivo == null) {
+            return "";
+        }
+        return semestre + "º Semestre " + anoLetivo;
     }
 
     public String getNomeTurma() {

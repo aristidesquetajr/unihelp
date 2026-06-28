@@ -127,7 +127,7 @@
                         <c:forEach var="periodo" items="${boletimPeriodos}">
                             <div class="card boletim-period-card">
                                 <div class="card-header">
-                                    <h3><i class="bi bi-journal-check" style="margin-right:.4rem"></i>${periodo.legenda} ${periodo.totalNotas} nota(s)</h3>
+                                    <h3><i class="bi bi-journal-check" style="margin-right:.4rem"></i>${periodo.legenda}</h3>
                                 </div>
                                 <div class="table-wrap">
                                     <table class="uni-table boletim-table">

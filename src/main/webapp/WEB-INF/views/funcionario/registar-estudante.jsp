@@ -184,7 +184,7 @@
                                                         data-curso="${t.idCurso}"
                                                         data-periodo="${t.idPeriodoLetivo}"
                                                         ${dto.idTurma == t.id ? 'selected' : ''}>
-                                                    ${t.nome} - ${t.anoAcademico}.º ano<c:if test="${not empty t.sala}"> - Sala ${t.sala}</c:if>
+                                                    ${t.nome} - ${t.anoAcademico}.º ano<c:if test="${not empty t.sala}"> - ${t.sala}</c:if>
                                                 </option>
                                             </c:forEach>
                                         </select>

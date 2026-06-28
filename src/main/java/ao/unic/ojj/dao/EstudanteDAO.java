@@ -122,7 +122,7 @@ public class EstudanteDAO {
 
     public EstudanteDetalheDTO buscarDetalhesPorId(int idEstudante) {
         String sql = """
-            SELECT u.nome, u.email, e.numeroEstudante,
+            SELECT e.id, u.nome, u.email, e.numeroEstudante,
             c.nome AS curso, t.nome AS turma,
             t.sala, t.anoAcademico, pl.anoLetivo
             FROM estudante e
@@ -141,15 +141,7 @@ public class EstudanteDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                EstudanteDetalheDTO dto = new EstudanteDetalheDTO();
-                dto.setNome(rs.getString("nome"));
-                dto.setEmail(rs.getString("email"));
-                dto.setNumeroEstudante(rs.getString("numeroEstudante"));
-                dto.setNomeCurso(rs.getString("curso"));
-                dto.setNomeTurma(rs.getString("turma"));
-                dto.setSala(rs.getString("sala"));
-                dto.setAnoAcademico(rs.getInt("anoAcademico"));
-                dto.setAnoLetivo(rs.getString("anoLetivo"));
+                EstudanteDetalheDTO dto = mapRowDTO(rs);
 
                 dto.setTelefones(buscarTelefonesPorEstudante(idEstudante, con));
                 return dto;
@@ -222,6 +214,43 @@ public class EstudanteDAO {
         return lista;
     }
 
+    public List<EstudanteDetalheDTO> listarEstudantesDetalhes() {
+        String sql = """
+            SELECT e.id, u.nome, u.email, e.numeroEstudante,
+            c.nome AS curso, t.nome AS turma,
+            t.sala, t.anoAcademico, pl.anoLetivo
+            FROM estudante e
+            JOIN utilizador u      ON e.idUtilizador  = u.id
+            LEFT JOIN inscricao i  ON i.idEstudante  = e.id AND i.estado = 'ACTIVO'
+            LEFT JOIN turma t      ON i.idTurma       = t.id
+            LEFT JOIN curso c      ON t.idCurso       = c.id
+            LEFT JOIN periodoLetivo pl ON t.idPeriodoLetivo = pl.id
+            """;
+
+        try {
+            con = ConexaoBD.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            List<EstudanteDetalheDTO> list = new ArrayList<>();
+
+            while (rs.next()) {
+                EstudanteDetalheDTO dto = mapRowDTO(rs);
+
+                dto.setTelefones(buscarTelefonesPorEstudante(dto.getId(), con));
+                list.add(dto);
+            }
+
+            return list;
+
+        } catch (SQLException e) {
+            System.err.println("[EstudanteDAO] Erro ao listar estudantes detalhes: " + e.getMessage());
+        } finally {
+            ConexaoBD.fechar(con);
+        }
+        return null;
+    }
+
     public boolean eliminar(int id) {
         String sql = "DELETE FROM estudante WHERE id=?";
 
@@ -266,6 +295,20 @@ public class EstudanteDAO {
                 rs.getInt("id"),
                 rs.getInt("idUtilizador"),
                 rs.getString("numeroEstudante")
+        );
+    }
+
+    private EstudanteDetalheDTO mapRowDTO(ResultSet rs) throws SQLException {
+        return new EstudanteDetalheDTO(
+                rs.getInt("id"),
+                rs.getString("nome"),
+                rs.getString("email"),
+                rs.getString("numeroEstudante"),
+                rs.getString("curso"),
+                rs.getString("turma"),
+                rs.getString("sala"),
+                rs.getInt("anoAcademico"),
+                rs.getString("anoLetivo")
         );
     }
 }

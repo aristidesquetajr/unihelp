@@ -127,8 +127,8 @@ public class TurmaDAO {
         try {
             con = ConexaoBD.getConexao();
             PreparedStatement ps = con.prepareStatement(sql.toString());
-            for (int i = 1; i < params.size(); i++) {
-                ps.setObject(i, params.get(i));
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

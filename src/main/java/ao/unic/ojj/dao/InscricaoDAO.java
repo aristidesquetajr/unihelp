@@ -23,14 +23,69 @@ public class InscricaoDAO {
 
     private static final String SQL_DTO = """
         SELECT i.id, i.dataInscricao, i.estado,
+            u.nome AS nomeEstudante, e.numeroEstudante,
             t.nome AS nomeTurma, t.sala, t.anoAcademico,
             c.nome AS nomeCurso,
             pl.anoLetivo, pl.semestre
         FROM inscricao i
-        JOIN turma        t  ON i.idTurma          = t.id
-        JOIN curso        c  ON t.idCurso           = c.id
-        JOIN periodoLetivo pl ON t.idPeriodoLetivo  = pl.id
+        JOIN estudante e ON i.idEstudante = e.id
+        JOIN utilizador u ON e.idUtilizador = u.id
+        JOIN turma t ON i.idTurma = t.id
+        JOIN curso c ON t.idCurso = c.id
+        JOIN periodoLetivo pl ON t.idPeriodoLetivo = pl.id                                  
     """;
+
+    public List<InscricaoDetalheDTO> listarDetalhes(Integer periodoId, String estado,
+            Integer cursoId, String nomeEstudante, String numeroEstudante) {
+        StringBuilder sql = new StringBuilder(SQL_DTO + " WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (periodoId != null) {
+            sql.append(" AND pl.id = ?");
+            params.add(periodoId);
+        }
+
+        if (estado != null && !estado.trim().isEmpty()) {
+            sql.append(" AND i.estado = ?");
+            params.add(estado.trim().toUpperCase());
+        }
+
+        if (cursoId != null) {
+            sql.append(" AND t.idCurso = ?");
+            params.add(cursoId);
+        }
+
+        if (nomeEstudante != null && !nomeEstudante.trim().isEmpty()) {
+            sql.append(" AND u.nome LIKE ?");
+            params.add("%" + nomeEstudante.trim() + "%");
+        }
+
+        if (numeroEstudante != null && !numeroEstudante.trim().isEmpty()) {
+            sql.append(" AND e.numeroEstudante LIKE ?");
+            params.add("%" + numeroEstudante.trim() + "%");
+        }
+
+        sql.append(" ORDER BY i.dataInscricao DESC");
+
+        List<InscricaoDetalheDTO> lista = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConexaoBD.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql.toString());
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(mapRowDTO(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("[InscricaoDAO] Erro ao listar detalhes: " + e.getMessage());
+        } finally {
+            ConexaoBD.fechar(con);
+        }
+        return lista;
+    }
 
     public boolean inserir(Inscricao i) {
         String sql = "INSERT INTO inscricao (idEstudante, idTurma, dataInscricao, estado) "
@@ -86,7 +141,7 @@ public class InscricaoDAO {
                 lista.add(mapRowDTO(rs));
             }
         } catch (SQLException e) {
-            System.err.println("[InscricaoDAO] Erro ao listar detalhes: " + e.getMessage());
+            System.err.println("[InscricaoDAO] Erro ao listar incricoes detalhes por estudante: " + e.getMessage());
         } finally {
             ConexaoBD.fechar(con);
         }
@@ -197,9 +252,11 @@ public class InscricaoDAO {
 
     private InscricaoDetalheDTO mapRowDTO(ResultSet rs) throws SQLException {
         InscricaoDetalheDTO dto = new InscricaoDetalheDTO();
-        dto.setIdInscricao(rs.getInt("id"));
+        dto.setId(rs.getInt("id"));
         dto.setDataInscricao(rs.getDate("dataInscricao"));
         dto.setEstado(Inscricao.Estado.valueOf(rs.getString("estado")));
+        dto.setNomeEstudante(rs.getString("nomeEstudante"));
+        dto.setNumeroEstudante(rs.getString("numeroEstudante"));
         dto.setNomeTurma(rs.getString("nomeTurma"));
         dto.setSala(rs.getString("sala"));
         dto.setAnoAcademico(rs.getInt("anoAcademico"));

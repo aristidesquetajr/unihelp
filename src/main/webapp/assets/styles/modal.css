@@ -1,0 +1,120 @@
+/* === Modal genérico === */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay.open .modal-box {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg, #fff);
+    border-radius: var(--radius, 10px);
+    width: min(520px, 94vw);
+    max-height: 90vh;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    transform: translateY(30px) scale(.96);
+    opacity: 0;
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+}
+
+.modal-box > form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border, #e9ecef);
+    flex-shrink: 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text-muted, #6c757d);
+    padding: .2rem;
+    line-height: 1;
+    border-radius: 6px;
+    transition: background .15s, color .15s;
+}
+
+.modal-close:hover {
+    background: var(--bg-hover, #f1f3f5);
+    color: var(--text, #212529);
+}
+
+.modal-body {
+    padding: 1.25rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    max-height: 60vh;
+}
+
+.modal-footer {
+    display: flex;
+    gap: .6rem;
+    justify-content: flex-end;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border, #e9ecef);
+    flex-shrink: 0;
+}
+
+.tag-filtro {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .75rem;
+    background: var(--primary, #4361ee);
+    color: #fff;
+    padding: .15rem .55rem;
+    border-radius: 20px;
+    margin-left: .5rem;
+}
+
+@media (max-width: 576px) {
+    .modal-box {
+        width: 100vw;
+        max-height: 100dvh;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .modal-body {
+        max-height: none;
+    }
+}

@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class EstudanteDetalheDTO {
 
+    private int id;
     private String nome;
     private String email;
     private String numeroEstudante;
@@ -23,6 +24,26 @@ public class EstudanteDetalheDTO {
     private List<String> telefones;
 
     public EstudanteDetalheDTO() {
+    }
+
+    public EstudanteDetalheDTO(int id, String nome, String email, String numeroEstudante, String nomeCurso, String nomeTurma, String sala, int anoAcademico, String anoLetivo) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.numeroEstudante = numeroEstudante;
+        this.nomeCurso = nomeCurso;
+        this.nomeTurma = nomeTurma;
+        this.sala = sala;
+        this.anoAcademico = anoAcademico;
+        this.anoLetivo = anoLetivo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

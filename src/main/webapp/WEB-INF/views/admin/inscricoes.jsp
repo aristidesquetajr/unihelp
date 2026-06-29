@@ -260,18 +260,21 @@
                                         <select id="turmaId" name="turmaId" class="form-control" required>
                                             <option value="">— Seleccione a turma —</option>
                                             <c:forEach var="t" items="${turmas}">
-                                                <option value="${t.id}">${t.nome} — ${t.nomeCurso}</option>
+                                                <option value="${t.id}" data-periodo="${t.idPeriodoLetivo}">${t.nome} — ${t.nomeCurso}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="estudanteId">Estudante <span class="req">*</span></label>
-                                        <select id="estudanteId" name="estudanteId" class="form-control" required>
-                                            <option value="">— Seleccione o estudante —</option>
+                                        <label class="form-label" for="estudanteInput">Estudante <span class="req">*</span></label>
+                                        <input type="search" id="estudanteInput" list="estudantesList" class="form-control"
+                                               placeholder="Pesquisar estudante por nome ou número…" required autocomplete="off"
+                                               oninput="selecionarEstudante(this)">
+                                        <input type="hidden" name="estudanteId" id="estudanteHidden">
+                                        <datalist id="estudantesList">
                                             <c:forEach var="e" items="${estudantes}">
-                                                <option value="${e.id}">${e.nome} — ${e.numeroEstudante}</option>
+                                                <option value="${e.nome} — ${e.numeroEstudante}" data-id="${e.id}">
                                             </c:forEach>
-                                        </select>
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -292,12 +295,20 @@
         <script>
             (function () {
                 'use strict';
+
+                // --- Modal ---
                 var overlay = document.getElementById('modalNovaInscricao');
                 var btnAbrir = document.getElementById('btnNovaInscricao');
                 var btnFechar = document.getElementById('btnFecharNovaInscricao');
                 var btnCancelar = document.getElementById('btnCancelarNovaInscricao');
 
                 function abrir() {
+                    var form = document.getElementById('modalNovaInscricao').querySelector('form');
+                    if (form) {
+                        form.reset();
+                        document.getElementById('estudanteHidden').value = '';
+                        if (typeof filtrarTurmas === 'function') filtrarTurmas();
+                    }
                     overlay.classList.add('open');
                     document.body.style.overflow = 'hidden';
                 }
@@ -318,6 +329,43 @@
                 document.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape' && overlay.classList.contains('open')) fechar();
                 });
+
+                // --- Filtrar turmas por período ---
+                var periodoSelect = document.getElementById('periodoId');
+                var turmaSelect = document.getElementById('turmaId');
+                var turmaOptions = Array.prototype.slice.call(turmaSelect.options);
+
+                function filtrarTurmas() {
+                    var periodoId = periodoSelect.value;
+                    turmaSelect.innerHTML = '<option value="">— Seleccione a turma —</option>';
+                    for (var i = 1; i < turmaOptions.length; i++) {
+                        var opt = turmaOptions[i];
+                        if (!periodoId || opt.getAttribute('data-periodo') === periodoId) {
+                            turmaSelect.appendChild(opt.cloneNode(true));
+                        }
+                    }
+                    turmaSelect.disabled = turmaSelect.options.length === 1;
+                }
+
+                if (periodoSelect) {
+                    periodoSelect.addEventListener('change', filtrarTurmas);
+                    filtrarTurmas();
+                }
+
+                // --- Selecção de estudante ---
+                window.selecionarEstudante = function (input) {
+                    var list = document.getElementById('estudantesList');
+                    var hidden = document.getElementById('estudanteHidden');
+                    var val = input.value.trim();
+                    if (!val) { hidden.value = ''; return; }
+                    for (var i = 0; i < list.options.length; i++) {
+                        if (list.options[i].value === val) {
+                            hidden.value = list.options[i].getAttribute('data-id');
+                            return;
+                        }
+                    }
+                    hidden.value = '';
+                };
             })();
         </script>
     </body>

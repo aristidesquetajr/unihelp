@@ -52,14 +52,14 @@ public class GerirCursosServlet extends HttpServlet {
         boolean sucesso = false;
 
         switch (acao != null ? acao : "") {
-            case "ADICIONAR":
+            case "ADICIONAR" -> {
                 Curso novo = new Curso(req.getParameter("nome"), true);
                 sucesso = cursoDAO.inserir(novo);
                 req.getSession().setAttribute("mensagem",
                         sucesso ? "Curso criado." : "Erro ao criar curso.");
-                break;
+            }
 
-            case "EDITAR":
+            case "EDITAR" -> {
                 Curso editado = new Curso(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("nome"),
@@ -68,13 +68,24 @@ public class GerirCursosServlet extends HttpServlet {
                 sucesso = cursoDAO.atualizar(editado);
                 req.getSession().setAttribute("mensagem",
                         sucesso ? "Curso actualizado." : "Erro ao actualizar.");
-                break;
+            }
 
-            case "ELIMINAR":
+            case "ATIVO" -> {
+                int idToggle = Integer.parseInt(req.getParameter("id"));
+                Curso cursoToggle = cursoDAO.buscarPorId(idToggle);
+                if (cursoToggle != null) {
+                    cursoToggle.setAtivo(!cursoToggle.isAtivo());
+                    sucesso = cursoDAO.atualizar(cursoToggle);
+                }
+                req.getSession().setAttribute("mensagem",
+                        sucesso ? "Estado do curso actualizado." : "Erro ao actualizar estado.");
+            }
+
+            case "ELIMINAR" -> {
                 sucesso = cursoDAO.eliminar(Integer.parseInt(req.getParameter("id")));
                 req.getSession().setAttribute("mensagem",
                         sucesso ? "Curso eliminado." : "Não é possível eliminar — existem turmas associadas.");
-                break;
+            }
         }
 
         res.sendRedirect(req.getContextPath() + "/admin/cursos");

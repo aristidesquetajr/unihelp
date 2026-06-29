@@ -1232,4 +1232,47 @@ a{
     }
 }
 
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 22px;
+    transition: background .25s;
+}
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 2px;
+    bottom: 2px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .25s;
+}
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--success, #276749);
+}
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(18px);
+}
+.toggle-form {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
 /* End of unihelp base */

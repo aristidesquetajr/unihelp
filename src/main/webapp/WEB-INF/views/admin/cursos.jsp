@@ -117,10 +117,13 @@
                                                         <td class="muted">${s.count}</td>
                                                         <td><strong>${c.nome}</strong></td>
                                                         <td>
-                                                            <form action="${pageContext.request.contextPath}/admin/cursos" method="post" style="display:inline">
+                                                            <form action="${pageContext.request.contextPath}/admin/cursos" method="post" class="toggle-form">
                                                                 <input type="hidden" name="acao" value="ATIVO">
                                                                 <input type="hidden" name="id" value="${c.id}">
-                                                                <input type="checkbox" name="ativo" id="ativo" ${c.ativo ? 'checked' : ''}/>
+                                                                <label class="toggle-switch">
+                                                                    <input type="checkbox" name="ativo" ${c.ativo ? 'checked' : ''} onchange="this.closest('form').submit()">
+                                                                    <span class="toggle-slider"></span>
+                                                                </label>
                                                             </form>
                                                         </td>
                                                         <td>

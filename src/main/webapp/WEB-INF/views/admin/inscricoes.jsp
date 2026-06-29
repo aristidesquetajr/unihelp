@@ -75,7 +75,7 @@
                         </c:choose>
                     </c:if>
 
-                    <div style="display:grid;grid-template-columns:1fr 340px;gap:1.25rem;align-items:start">
+                    <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;align-items:start">
 
                         <!-- Lista -->
                         <div class="card">
@@ -86,9 +86,14 @@
                                     </c:if>
                                 </h3>
                                 <span class="tag">${not empty totalInscricoes ? totalInscricoes : 0} registo(s)</span>
-                                <button type="button" id="btnAbrirFiltros" class="btn btn-primary btn-md" style="gap:.4rem">
-                                    <i class="bi bi-funnel"></i> Filtrar
-                                </button>
+                                <div style="display:flex;gap:.6rem">
+                                    <button type="button" id="btnAbrirFiltros" class="btn btn-primary btn-md" style="gap:.4rem">
+                                        <i class="bi bi-funnel"></i> Filtrar
+                                    </button>
+                                    <button type="button" id="btnNovaInscricao" class="btn btn-primary btn-md" style="gap:.4rem">
+                                        <i class="bi bi-plus-circle"></i> Nova Inscrição
+                                    </button>
+                                </div>
                             </div>
                             <div class="table-wrap">
                                 <table class="uni-table">
@@ -167,52 +172,6 @@
                             </div>
                         </div>
 
-                        <!-- Formulário -->
-                        <div class="card" style="position:sticky;top:calc(var(--topbar-h) + 1rem)">
-                            <div class="card-header">
-                                <h3><i class="bi bi-plus-circle" style="margin-right:.4rem"></i>Nova Inscrição</h3>
-                            </div>
-                            <div class="card-body">
-                                <form action="${pageContext.request.contextPath}/admin/inscricoes" method="post" data-loading>
-                                    <input type="hidden" name="acao" value="inscrever">
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="periodoId">Período Letivo <span class="req">*</span></label>
-                                        <select id="periodoId" name="periodoId" class="form-control" required>
-                                            <option value="">— Seleccione o período —</option>
-                                            <c:forEach var="p" items="${periodos}">
-                                                <option value="${p.id}">${p.nomeFormatado}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="turmaId">Turma <span class="req">*</span></label>
-                                        <select id="turmaId" name="turmaId" class="form-control" required>
-                                            <option value="">— Seleccione a turma —</option>
-                                            <c:forEach var="t" items="${turmas}">
-                                                <option value="${t.id}">${t.nome} — ${t.nomeCurso}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="estudanteId">Estudante <span class="req">*</span></label>
-                                        <select id="estudanteId" name="estudanteId" class="form-control" required>
-                                            <option value="">— Seleccione o estudante —</option>
-                                            <c:forEach var="e" items="${estudantes}">
-                                                <option value="${e.id}">${e.nome} — ${e.numeroEstudante}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary btn-full">
-                                        <i class="bi bi-save"></i> Inscrever Estudante
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
                     </div>
 
                     <!-- Modal de Filtros -->
@@ -276,11 +235,90 @@
                             </form>
                         </div>
                     </div>
+
+                    <!-- Modal de Nova Inscrição -->
+                    <div class="modal-overlay" id="modalNovaInscricao">
+                        <div class="modal-box">
+                            <div class="modal-header">
+                                <h3><i class="bi bi-plus-circle"></i> Nova Inscrição</h3>
+                                <button type="button" class="modal-close" id="btnFecharNovaInscricao">&times;</button>
+                            </div>
+                            <form action="${pageContext.request.contextPath}/admin/inscricoes" method="post">
+                                <input type="hidden" name="acao" value="inscrever">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="form-label" for="periodoId">Período Letivo <span class="req">*</span></label>
+                                        <select id="periodoId" name="periodoId" class="form-control" required>
+                                            <option value="">— Seleccione o período —</option>
+                                            <c:forEach var="p" items="${periodos}">
+                                                <option value="${p.id}">${p.nomeFormatado}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="turmaId">Turma <span class="req">*</span></label>
+                                        <select id="turmaId" name="turmaId" class="form-control" required>
+                                            <option value="">— Seleccione a turma —</option>
+                                            <c:forEach var="t" items="${turmas}">
+                                                <option value="${t.id}">${t.nome} — ${t.nomeCurso}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="estudanteId">Estudante <span class="req">*</span></label>
+                                        <select id="estudanteId" name="estudanteId" class="form-control" required>
+                                            <option value="">— Seleccione o estudante —</option>
+                                            <c:forEach var="e" items="${estudantes}">
+                                                <option value="${e.id}">${e.nome} — ${e.numeroEstudante}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline" id="btnCancelarNovaInscricao">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save"></i> Inscrever Estudante
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
 
         <script src="${pageContext.request.contextPath}/assets/scripts/unihelp.js"></script>
         <script src="${pageContext.request.contextPath}/assets/scripts/modal.js"></script>
+        <script>
+            (function () {
+                'use strict';
+                var overlay = document.getElementById('modalNovaInscricao');
+                var btnAbrir = document.getElementById('btnNovaInscricao');
+                var btnFechar = document.getElementById('btnFecharNovaInscricao');
+                var btnCancelar = document.getElementById('btnCancelarNovaInscricao');
+
+                function abrir() {
+                    overlay.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function fechar() {
+                    overlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+
+                if (btnAbrir) btnAbrir.addEventListener('click', abrir);
+                if (btnFechar) btnFechar.addEventListener('click', fechar);
+                if (btnCancelar) btnCancelar.addEventListener('click', fechar);
+
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === overlay) fechar();
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && overlay.classList.contains('open')) fechar();
+                });
+            })();
+        </script>
     </body>
 </html>

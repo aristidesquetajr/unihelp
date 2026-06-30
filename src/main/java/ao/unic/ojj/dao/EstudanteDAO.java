@@ -143,6 +143,7 @@ public class EstudanteDAO {
             WHERE e.id = ?
             """;
         
+        Connection con = null;
         try {
             con = ConexaoBD.getConexao();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -152,7 +153,12 @@ public class EstudanteDAO {
             if (rs.next()) {
                 EstudanteDetalheDTO dto = mapRowDTO(rs);
                 
-                dto.setTelefones(buscarTelefonesPorEstudante(idEstudante, con));
+                try {
+                    dto.setTelefones(buscarTelefonesPorEstudante(idEstudante, con));
+                } catch (SQLException e) {
+                    System.err.println("[EstudanteDAO] Erro ao buscar telefones: " + e.getMessage());
+                }
+                
                 return dto;
             }
             
@@ -260,6 +266,8 @@ public class EstudanteDAO {
             sql.append(" AND t.idCurso = ?");
             params.add(cursoId);
         }
+        
+        sql.append(" ORDER BY u.nome");
 
         try {
             con = ConexaoBD.getConexao();
@@ -346,9 +354,16 @@ public class EstudanteDAO {
                 rs.getInt("anoAcademico"),
                 rs.getString("anoLetivo")
         );
-        
-        dto.setStatus(Utilizador.Status.valueOf(rs.getString("status")));
-        dto.setEstadoInscricao(Inscricao.Estado.valueOf(rs.getString("estadoInscricao")));
+
+        String status = rs.getString("status");
+        if (status != null) {
+            dto.setStatus(Utilizador.Status.valueOf(status));
+        }
+
+        String estadoInscricao = rs.getString("estadoInscricao");
+        if (estadoInscricao != null) {
+            dto.setEstadoInscricao(Inscricao.Estado.valueOf(estadoInscricao));
+        }
         
         return dto;
     }

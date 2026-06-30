@@ -24,6 +24,7 @@ public class ErrorServlet extends HttpServlet {
         String jsp;
 
         switch (codigo) {
+            case "400" -> jsp = "/WEB-INF/views/sistema/400.jsp";
             case "403" -> jsp = "/WEB-INF/views/sistema/403.jsp";
             case "404" -> jsp = "/WEB-INF/views/sistema/404.jsp";
             case "500" -> jsp = "/WEB-INF/views/sistema/500.jsp";

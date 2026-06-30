@@ -1232,6 +1232,70 @@ a{
     }
 }
 
+/* Layout do perfil — grid 2 colunas */
+.perfil-grid{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:1.25rem;
+    align-items:start
+}
+.perfil-header-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem
+}
+.action-bar{
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap
+}
+.breadcrumb{
+    display:inline-flex;
+    align-items:center;
+    gap:.35rem;
+    font-size:.88rem;
+    color:var(--muted)
+}
+.breadcrumb a{
+    color:var(--primary);
+    font-weight:600
+}
+.breadcrumb .sep{
+    color:#98a2b3
+}
+.text-truncate{
+    max-width:200px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis
+}
+.mt-1{
+    margin-top:.5rem
+}
+.gap-1{
+    gap:.5rem
+}
+.info-email{
+    font-size:.82rem;
+    word-break:break-all
+}
+.right-column{
+    display:flex;
+    flex-direction:column;
+    gap:1.25rem
+}
+.profile-name{
+    font-size:1.15rem
+}
+.card-header h3 i{
+    margin-right:.4rem
+}
+.badge-dot{
+    font-size:.45rem
+}
+
 /* Toggle Switch */
 .toggle-switch {
     position: relative;

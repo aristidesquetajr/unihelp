@@ -82,4 +82,8 @@ public class NotaDetalheDTO {
     public boolean isAprovado() {
         return this.valor >= 10.0;
     }
+
+    public String getNomePeriodo() {
+        return anoLetivo + " - " + semestre + "\u00BA Semestre";
+    }
 }

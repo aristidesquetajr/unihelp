@@ -137,4 +137,8 @@ public class EstudanteDetalheDTO {
     public void setEstadoInscricao(Inscricao.Estado estadoInscricao) {
         this.estadoInscricao = estadoInscricao;
     }
+
+    public String getNomePeriodo() {
+        return anoLetivo;
+    }
 }

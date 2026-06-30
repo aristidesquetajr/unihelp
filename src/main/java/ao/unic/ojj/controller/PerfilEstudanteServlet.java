@@ -1,10 +1,13 @@
 package ao.unic.ojj.controller;
 
 import ao.unic.ojj.dao.AtendimentoDAO;
+import ao.unic.ojj.dao.DisciplinaDAO;
 import ao.unic.ojj.dao.EstudanteDAO;
 import ao.unic.ojj.dao.NotaDAO;
+import ao.unic.ojj.dao.PeriodoLetivoDAO;
 import ao.unic.ojj.dao.UtilizadorDAO;
 import ao.unic.ojj.dto.EstudanteDetalheDTO;
+import ao.unic.ojj.model.Nota;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,6 +22,8 @@ public class PerfilEstudanteServlet extends HttpServlet {
     private final EstudanteDAO estudanteDAO = new EstudanteDAO(utilizadorDAO);
     private final NotaDAO notaDAO = new NotaDAO();
     private final AtendimentoDAO atendimentoDAO = new AtendimentoDAO();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private final PeriodoLetivoDAO periodoLetivoDAO = new PeriodoLetivoDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -57,6 +62,10 @@ public class PerfilEstudanteServlet extends HttpServlet {
         } catch (Exception e) {
             req.setAttribute("atendimentos", null);
         }
+
+        req.setAttribute("disciplinas", disciplinaDAO.listar());
+        req.setAttribute("periodos", periodoLetivoDAO.listar());
+        req.setAttribute("tipos", Nota.Tipo.values());
 
         req.getRequestDispatcher("/WEB-INF/views/funcionario/perfil-estudante.jsp")
                 .forward(req, res);

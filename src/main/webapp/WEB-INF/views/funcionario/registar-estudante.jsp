@@ -38,7 +38,6 @@
                     <span class="nav-section-label">Estudantes</span>
                     <a href="${pageContext.request.contextPath}/funcionario/estudantes" class="sidebar-link"><i class="bi bi-people"></i> Lista de Estudantes</a>
                     <a href="${pageContext.request.contextPath}/funcionario/registar-estudante" class="sidebar-link active"><i class="bi bi-person-plus"></i> Registar Estudante</a>
-                    <a href="${pageContext.request.contextPath}/funcionario/lancar-nota" class="sidebar-link"><i class="bi bi-pencil-square"></i> Lançar Nota</a>
                 </nav>
             </aside>
 

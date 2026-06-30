@@ -89,6 +89,10 @@ public class PeriodoLetivo {
         this.ativo = ativo;
     }
 
+    public String getNome() {
+        return semestre + "º Semestre " + anoLetivo;
+    }
+
     public String getNomeFormatado() {
         return semestre + "º Semestre " + anoLetivo;
     }

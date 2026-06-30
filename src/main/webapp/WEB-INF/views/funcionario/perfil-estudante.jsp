@@ -9,6 +9,7 @@
         <title>Perfil do Estudante — Funcionário | UNIHELP</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/unihelp.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/modal.css">
     </head>
     <body>
 
@@ -31,7 +32,6 @@
                     <span class="nav-section-label">Estudantes</span>
                     <a href="${pageContext.request.contextPath}/funcionario/estudantes"         class="sidebar-link active"><i class="bi bi-people"></i> Lista de Estudantes</a>
                     <a href="${pageContext.request.contextPath}/funcionario/registar-estudante" class="sidebar-link"><i class="bi bi-person-plus"></i> Registar Estudante</a>
-                    <a href="${pageContext.request.contextPath}/funcionario/lancar-nota"        class="sidebar-link"><i class="bi bi-pencil-square"></i> Lançar Nota</a>
                 </nav>
             </aside>
 
@@ -139,10 +139,11 @@
                                                class="btn btn-outline btn-sm">
                                                 <i class="bi bi-arrow-left"></i> Voltar
                                             </a>
-                                            <a href="${pageContext.request.contextPath}/funcionario/lancar-nota?estudanteId=${estudante.id}"
-                                               class="btn btn-primary btn-sm">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm"
+                                                    onclick="abrirModalNota(${estudante.id})">
                                                 <i class="bi bi-pencil-square"></i> Lançar Nota
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -303,10 +304,128 @@
                         </c:otherwise>
                     </c:choose>
 
+                    <!-- Modal de Lançar Nota -->
+                    <div class="modal-overlay" id="modalLancarNota">
+                        <div class="modal-box">
+                            <div class="modal-header">
+                                <h3><i class="bi bi-pencil-square"></i> Lançar Nota</h3>
+                                <button type="button" class="modal-close" id="btnFecharNota">&times;</button>
+                            </div>
+                            <form action="${pageContext.request.contextPath}/funcionario/lancar-nota" method="post">
+                                <div class="modal-body">
+                                    <input type="hidden" name="estudanteId" id="notaEstudanteId">
+
+                                    <div class="form-group">
+                                        <label class="form-label">Estudante</label>
+                                        <input type="text" class="form-control"
+                                               value="${estudante.nome}${not empty estudante.numeroEstudante ? ' — '.concat(estudante.numeroEstudante) : ''}"
+                                               disabled>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label" for="notaDisciplinaId">Disciplina <span class="req">*</span></label>
+                                            <select id="notaDisciplinaId" name="disciplinaId" class="form-control" required>
+                                                <option value="">— Seleccione —</option>
+                                                <c:forEach var="d" items="${disciplinas}">
+                                                    <option value="${d.id}">${d.nome}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="notaPeriodoId">Período Letivo <span class="req">*</span></label>
+                                            <select id="notaPeriodoId" name="periodoId" class="form-control" required>
+                                                <option value="">— Seleccione —</option>
+                                                <c:forEach var="p" items="${periodos}">
+                                                    <option value="${p.id}">${p.nome}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label" for="notaTipo">Tipo de Avaliação <span class="req">*</span></label>
+                                            <select id="notaTipo" name="tipo" class="form-control" required>
+                                                <option value="">— Seleccione —</option>
+                                                <option value="AVALIACAO">Avaliação Contínua</option>
+                                                <option value="P1">Prova 1 (P1)</option>
+                                                <option value="P2">Prova 2 (P2)</option>
+                                                <option value="EXAME">Exame</option>
+                                                <option value="RECURSO">Recurso</option>
+                                                <option value="ESPECIAL">Época Especial</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="notaValor">Nota (0 – 20) <span class="req">*</span></label>
+                                            <input type="number" id="notaValor" name="valor" class="form-control"
+                                                   placeholder="Ex: 14" min="0" max="20" step="0.5" required>
+                                            <span class="form-hint">Escala de 0 a 20. Aprovado: ≥ 10.</span>
+                                            <span class="form-error" id="erroNotaModal" style="display:none">A nota deve estar entre 0 e 20.</span>
+                                        </div>
+                                    </div>
+
+                                    <div id="previewNotaModal" style="display:none;margin-bottom:1rem">
+                                        <div class="alert" id="previewAlertaModal">
+                                            <i class="bi" id="previewIconeModal"></i>
+                                            <div id="previewTextoModal"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline" id="btnCancelarNota">
+                                        <i class="bi bi-x-circle"></i> Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" onclick="return validarNotaModal()">
+                                        <i class="bi bi-save"></i> Lançar Nota
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
 
-        <script src="${pageContext.request.contextPath}/assets/js/unihelp.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/unihelp.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/scripts/modal.js"></script>
+        <script>
+            function abrirModalNota(estudanteId) {
+                document.getElementById('notaEstudanteId').value = estudanteId;
+                initModal('modalLancarNota', { fecharId: 'btnFecharNota', cancelarId: 'btnCancelarNota' });
+                document.getElementById('modalLancarNota').classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            document.getElementById('notaValor').addEventListener('input', function () {
+                var v = parseFloat(this.value);
+                var preview = document.getElementById('previewNotaModal');
+                var alerta  = document.getElementById('previewAlertaModal');
+                var icone   = document.getElementById('previewIconeModal');
+                var texto   = document.getElementById('previewTextoModal');
+                if (this.value === '' || isNaN(v)) { preview.style.display = 'none'; return; }
+                preview.style.display = 'block';
+                if (v >= 10) {
+                    alerta.className = 'alert alert-success';
+                    icone.className  = 'bi bi-check-circle-fill';
+                    texto.innerHTML  = 'Nota <strong>' + v + '</strong> — <strong>Aprovado</strong>';
+                } else {
+                    alerta.className = 'alert alert-danger';
+                    icone.className  = 'bi bi-x-circle-fill';
+                    texto.innerHTML  = 'Nota <strong>' + v + '</strong> — <strong>Reprovado</strong>';
+                }
+            });
+
+            function validarNotaModal() {
+                var v = parseFloat(document.getElementById('notaValor').value);
+                var err = document.getElementById('erroNotaModal');
+                if (isNaN(v) || v < 0 || v > 20) {
+                    err.style.display = 'block';
+                    return false;
+                }
+                err.style.display = 'none';
+                return true;
+            }
+        </script>
     </body>
 </html>

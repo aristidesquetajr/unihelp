@@ -1,30 +1,51 @@
 (function () {
     'use strict';
 
-    var overlay = document.getElementById('modalFiltros');
-    var btnAbrir = document.getElementById('btnAbrirFiltros');
-    var btnFechar = document.getElementById('btnFecharFiltros');
-    var btnCancelar = document.getElementById('btnCancelarFiltros');
+    function initModal(overlayId, opts) {
+        var overlay = document.getElementById(overlayId);
+        if (!overlay) return;
 
-    function abrir() {
-        overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        var abrir  = opts && opts.abrirId  ? document.getElementById(opts.abrirId)  : null;
+        var fechar = opts && opts.fecharId ? document.getElementById(opts.fecharId) : null;
+        var cancelar = opts && opts.cancelarId ? document.getElementById(opts.cancelarId) : null;
+
+        function abrirModal() {
+            fecharTodos();
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function fecharTodos() {
+            document.querySelectorAll('.modal-overlay.open').forEach(function (m) {
+                m.classList.remove('open');
+            });
+        }
+
+        if (abrir) abrir.addEventListener('click', abrirModal);
+        if (fechar) fechar.addEventListener('click', fecharModal);
+        if (cancelar) cancelar.addEventListener('click', fecharModal);
+
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) fecharModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && overlay.classList.contains('open')) fecharModal();
+        });
     }
 
-    function fechar() {
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
+    if (document.getElementById('modalFiltros')) {
+        initModal('modalFiltros', {
+            abrirId: 'btnAbrirFiltros',
+            fecharId: 'btnFecharFiltros',
+            cancelarId: 'btnCancelarFiltros'
+        });
     }
 
-    if (btnAbrir) btnAbrir.addEventListener('click', abrir);
-    if (btnFechar) btnFechar.addEventListener('click', fechar);
-    if (btnCancelar) btnCancelar.addEventListener('click', fechar);
-
-    overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) fechar();
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.classList.contains('open')) fechar();
-    });
+    window.initModal = initModal;
 })();

@@ -663,6 +663,11 @@ a{
 .req{
     color:var(--danger)
 }
+.form-error{
+    color:var(--danger);
+    font-size:.78rem;
+    margin-top:.15rem
+}
 
 /* Botões e utilitários usados nas views */
 .btn-sm{
